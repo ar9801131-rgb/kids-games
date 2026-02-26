@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Kids Fun Games</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f8ff;
+}
+h1 {
+    color: #ff6600;
+}
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.game-box {
+    margin-top: 20px;
+}
+.hidden {
+    display: none;
+}
+</style>
+</head>
+<body>
+
+<h1>🎮 Kids Fun Games</h1>
+
+<button onclick="showGame('colorGame')">🎨 Color Game</button>
+<button onclick="showGame('guessGame')">🔢 Guess Number</button>
+<button onclick="showGame('memoryGame')">🧠 Memory Game</button>
+
+<div id="colorGame" class="game-box hidden">
+    <h2>Click the Right Color!</h2>
+    <p id="colorText"></p>
+    <button onclick="checkColor('red')" style="background:red;">Red</button>
+    <button onclick="checkColor('blue')" style="background:blue;">Blue</button>
+    <button onclick="checkColor('green')" style="background:green;">Green</button>
+    <p id="colorResult"></p>
+</div>
+
+<div id="guessGame" class="game-box hidden">
+    <h2>Guess the Number (1-10)</h2>
+    <input type="number" id="guessInput">
+    <button onclick="checkGuess()">Guess</button>
+    <p id="guessResult"></p>
+</div>
+
+<div id="memoryGame" class="game-box hidden">
+    <h2>Memory Game</h2>
+    <p id="memoryText"></p>
+    <input type="text" id="memoryInput">
+    <button onclick="checkMemory()">Submit</button>
+    <p id="memoryResult"></p>
+</div>
+
+<script>
+let correctColor = "";
+let randomNumber = Math.floor(Math.random() * 10) + 1;
+let memoryWord = "";
+
+// Show Selected Game
+function showGame(gameId) {
+    document.getElementById("colorGame").classList.add("hidden");
+    document.getElementById("guessGame").classList.add("hidden");
+    document.getElementById("memoryGame").classList.add("hidden");
+    document.getElementById(gameId).classList.remove("hidden");
+
+    if(gameId === "colorGame") startColorGame();
+    if(gameId === "memoryGame") startMemoryGame();
+}
+
+// Color Game
+function startColorGame() {
+    const colors = ["red", "blue", "green"];
+    correctColor = colors[Math.floor(Math.random() * colors.length)];
+    document.getElementById("colorText").innerText = "Click: " + correctColor.toUpperCase();
+    document.getElementById("colorResult").innerText = "";
+}
+
+function checkColor(color) {
+    if(color === correctColor) {
+        document.getElementById("colorResult").innerText = "🎉 Correct!";
+    } else {
+        document.getElementById("colorResult").innerText = "❌ Try Again!";
+    }
+}
+
+// Guess Game
+function checkGuess() {
+    let guess = document.getElementById("guessInput").value;
+    if(guess == randomNumber) {
+        document.getElementById("guessResult").innerText = "🎉 You guessed right!";
+    } else {
+        document.getElementById("guessResult").innerText = "❌ Wrong! Try again.";
+    }
+}
+
+// Memory Game
+function startMemoryGame() {
+    const words = ["apple", "ball", "cat"];
+    memoryWord = words[Math.floor(Math.random() * words.length)];
+    document.getElementById("memoryText").innerText = "Remember this word: " + memoryWord;
+    document.getElementById("memoryResult").innerText = "";
+    setTimeout(() => {
+        document.getElementById("memoryText").innerText = "Now type the word!";
+    }, 2000);
+}
+
+function checkMemory() {
+    let input = document.getElementById("memoryInput").value;
+    if(input === memoryWord) {
+        document.getElementById("memoryResult").innerText = "🎉 Great Memory!";
+    } else {
+        document.getElementById("memoryResult").innerText = "❌ Wrong word!";
+    }
+}
+</script>
+
+</body>
+</html>
